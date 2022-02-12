@@ -1,6 +1,11 @@
 Layout/EndOfLine:
   EnforcedStyle: lf
 
+Layout/HashAlignment:
+  EnforcedColonStyle:
+    - key
+    - table
+
 Style/Documentation:
   Enabled: false
 
