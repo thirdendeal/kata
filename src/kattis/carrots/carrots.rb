@@ -2,11 +2,11 @@
 #
 # https://open.kattis.com/problems/carrots
 
-problems_solved =
+carrots_number =
   ARGF
   .each_line
   .first
   .scan(/[[:digit:]]+/)
   .slice(1)
 
-puts(problems_solved)
+puts(carrots_number)
