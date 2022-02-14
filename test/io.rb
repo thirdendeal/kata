@@ -1,4 +1,19 @@
-# Kattis Solution Test
+# IO Solution Test
+
+# In a given directory:
+#
+# attempt/
+#  attempt.rb
+#  input.txt
+#  output.txt
+#
+# The output of:
+#
+# => ruby attempt/attempt.rb attempt/input.txt
+#
+# Must be equal to:
+#
+# => cat attempt/output.txt
 
 require 'open3'
 require 'pathname'
