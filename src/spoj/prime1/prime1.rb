@@ -16,7 +16,7 @@ to_puts = body.map do |line|
 
   generator = Prime.each(upper)
 
-  generator.grep(lower..upper)
+  generator.grep(lower..)
 end
 
 io = StringIO.new
