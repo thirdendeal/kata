@@ -11,11 +11,11 @@
 #
 # The output of:
 #
-# => ruby attempt/attempt.rb attempt/input.txt
+# $ ruby attempt/attempt.rb attempt/input.txt
 #
 # Must be equal to:
 #
-# => cat attempt/output.txt
+# $ cat attempt/output.txt
 
 require 'open3'
 require 'pathname'
