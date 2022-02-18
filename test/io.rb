@@ -1,5 +1,7 @@
 # IO Solution Test
 
+# Usage: ruby io.rb directory/
+
 # In a given directory:
 #
 # attempt/
@@ -18,16 +20,21 @@
 require 'open3'
 require 'pathname'
 
-# Definition
+# Define
+
+HAS = {
+  stderr: 'Error: Solution has a non-empty standard error'
+}
 
 NO = {
   argument:  'Error: No directory given as argument',
   directory: 'Error: Argument is not a directory',
+  solution:  'Error: Solution output is different from "output.txt"',
   stdout:    'Error: Solution has no output',
   zero_exit: 'Error: Solution has a non-zero exit status'
-}.freeze
+}
 
-# Guard-clause
+# Assure
 
 abort(NO[:argument])  unless ARGV[0]
 abort(NO[:directory]) unless File.directory?(ARGV[0])
@@ -36,25 +43,37 @@ abort(NO[:directory]) unless File.directory?(ARGV[0])
 
 directory = Pathname.new(ARGV[0]).realpath
 
-file = {
-  ruby:   directory.join("#{directory.basename}.rb"),
+script = directory.join("#{directory.basename}.rb")
+input  = directory.join('input.txt')
+output = directory.join('output.txt')
 
-  input:  directory.join('input.txt'),
-  output: directory.join('output.txt')
-}
+# Execute
 
-answer = IO.read(file[:output])
-
-# Execution
-
-stdout, status =
-  Open3.capture2("ruby #{file[:ruby]} #{file[:input]}")
+stdout, stderr, status =
+  Open3.capture3("ruby #{script} #{input}")
 
 # Ensure
 
+unless stderr.empty?
+  warn(HAS[:stderr], stderr)
+
+  exit(false)
+end
+
+unless status.success?
+  warn(NO[:zero_exit], status)
+
+  exit(false)
+end
+
 abort(NO[:stdout]) if stdout.empty?
-abort(NO[:zero_exit]) unless status
 
 # Output
 
-abort(stdout) unless stdout == answer
+if output.exist?
+  unless output.read == stdout
+    warn(NO[:solution], stdout)
+
+    exit(false)
+  end
+end

@@ -14,3 +14,9 @@ Style/Documentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/SoleNestedConditional:
+  Enabled: false
