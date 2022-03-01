@@ -5,23 +5,23 @@
 require 'prime'
 require 'stringio'
 
-head = ARGF.first
-body = ARGF.first(head.to_i)
+bounds = ARGF.first(
+  ARGF.readline.to_i
+)
 
-to_puts = body.map do |line|
+primes = bounds.map do |line|
   lower, upper =
     line
     .scan(/[[:digit:]]+/)
+    .first(2)
     .map(&:to_i)
 
-  generator = Prime.each(upper)
-
-  generator.grep(lower..)
+  Prime.each(upper).grep(lower..)
 end
 
 io = StringIO.new
 
-to_puts.each do |array|
+primes.each do |array|
   io.puts(array)
   io.puts
 end
