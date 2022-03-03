@@ -3,7 +3,7 @@
 result = Dir.chdir(__dir__) do
   problems = Dir['../src/*/*']
 
-  problems.all? do |problem|
+  problems.map! do |problem|
     script =
       if File.directory?(problem)
         'io.rb'
@@ -11,8 +11,12 @@ result = Dir.chdir(__dir__) do
         'puts.rb'
       end
 
-    system('ruby', script, problem)
+    Thread.new do
+      system('ruby', script, problem)
+    end
   end
+
+  problems.all?(&:value)
 end
 
 exit(result)
