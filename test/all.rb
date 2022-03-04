@@ -13,7 +13,11 @@ exit_status = Dir.chdir(__dir__) do
         end
 
       Thread.new do
-        system('ruby', script, solution)
+        status = system('ruby', script, solution)
+
+        status.tap do |success|
+          puts(solution) unless success
+        end
       end
     end
 
