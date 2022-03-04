@@ -16,7 +16,7 @@ result = Dir.chdir(__dir__) do
     end
   end
 
-  problems.all?(&:value)
+  problems.map(&:value).all?(true)
 end
 
 exit(result)
