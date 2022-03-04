@@ -1,22 +1,24 @@
 # All Test
 
-result = Dir.chdir(__dir__) do
-  problems = Dir['../src/*/*']
+exit_status = Dir.chdir(__dir__) do
+  solutions = Dir['../src/*/*']
 
-  problems.map! do |problem|
-    script =
-      if File.directory?(problem)
-        'io.rb'
-      else
-        'puts.rb'
+  solutions.each_slice(4).all? do |batch|
+    batch.map! do |solution|
+      script =
+        if File.directory?(solution)
+          'io.rb'
+        else
+          'puts.rb'
+        end
+
+      Thread.new do
+        system('ruby', script, solution)
       end
-
-    Thread.new do
-      system('ruby', script, problem)
     end
-  end
 
-  problems.map(&:value).all?(true)
+    batch.map(&:value).all?(true)
+  end
 end
 
-exit(result)
+exit(exit_status)
