@@ -1,21 +1,21 @@
 # All Test
 
-stdin = ARGF.read unless STDIN.tty?
+solutions =
+  if $stdin.tty?
+    source = File.realpath(
+      "#{__dir__}/../src"
+    )
 
-if stdin
-  stdin = stdin.each_line.map do |line|
-    File.absolute_path(line.chomp)
+    Dir["#{source}/*/*"]
+  else
+    piped = $stdin.read.lines(chomp: true)
+
+    piped.map do |path|
+      File.realpath(path)
+    end
   end
-end
 
 exit_status = Dir.chdir(__dir__) do
-  solutions =
-    if String(stdin).empty?
-      Dir['../src/*/*']
-    else
-      stdin
-    end
-
   solutions.each_slice(4).all? do |batch|
     batch.map! do |solution|
       script =
