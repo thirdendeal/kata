@@ -34,7 +34,7 @@ exit_status = Dir.chdir(__dir__) do
       end
     end
 
-    batch.map(&:value).all?(true)
+    batch.map(&:value).all?
   end
 end
 
