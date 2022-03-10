@@ -14,63 +14,57 @@
 require 'open3'
 require 'pathname'
 
-# Define
+class Puts
+  HAS = {
+    stderr: 'Error: Solution has a non-empty standard error'
+  }
 
-HAS = {
-  stderr: 'Error: Solution has a non-empty standard error'
-}
+  NO = {
+    argument:  'Error: No directory given as argument',
+    file:      'Error: Argument is not a file',
+    solution:  'Error: Solution output is different from annotation',
+    stdout:    'Error: Solution has no output',
+    zero_exit: 'Error: Solution has a non-zero exit status'
+  }
 
-NO = {
-  argument:  'Error: No directory given as argument',
-  file:      'Error: Argument is not a file',
-  solution:  'Error: Solution output is different from annotation',
-  stdout:    'Error: Solution has no output',
-  zero_exit: 'Error: Solution has a non-zero exit status'
-}
+  attr_reader :script
 
-# Assure
+  def initialize(path)
+    abort(NO[:file]) unless File.file?(path)
 
-abort(NO[:argument]) unless ARGV[0]
-abort(NO[:file])     unless File.file?(ARGV[0])
+    @script = Pathname.new(path).realpath
 
-# Input
+    execute
+  end
 
-script = Pathname.new(ARGV[0]).realpath
+  def test
+    @annotation =
+      @script
+      .readlines
+      .last
+      .partition('# => ')
+      .last
 
-# Execute
+    if !@annotation.empty? && @annotation != @stdout
+      warn(NO[:solution], @stdout)
 
-stdout, stderr, status =
-  Open3.capture3("ruby #{script}")
+      exit(false)
+    end
 
-# Ensure
+    @status
+  end
 
-unless stderr.empty?
-  warn(HAS[:stderr], stderr)
+  private
 
-  exit(false)
-end
+  def execute
+    @stdout, @stderr, @status =
+      Open3.capture3('ruby', @script.to_path)
 
-unless status.success?
-  warn(NO[:zero_exit], status)
+    @status_code = @status.exitstatus
 
-  exit(false)
-end
+    warn(HAS[:stderr], @stderr)        unless @stderr.empty?
+    warn(NO[:zero_exit], @status_code) unless @status.success?
 
-abort(NO[:stdout]) if stdout.empty?
-
-# Output
-
-annotation =
-  script
-  .readlines
-  .last
-  .partition('# => ')
-  .last
-
-unless annotation.empty?
-  unless annotation == stdout
-    warn(NO[:solution], stdout)
-
-    exit(false)
+    abort(NO[:stdout]) if @stdout.empty?
   end
 end

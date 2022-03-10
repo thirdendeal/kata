@@ -1,5 +1,8 @@
 # All Test
 
+require_relative 'io'
+require_relative 'puts'
+
 solutions =
   if $stdin.tty?
     source = File.realpath(
@@ -15,18 +18,18 @@ solutions =
     end
   end
 
-exit_status = Dir.chdir(__dir__) do
+exit_status =
   solutions.each_slice(4).all? do |batch|
     batch.map! do |solution|
-      script =
+      test_case =
         if File.directory?(solution)
-          'io.rb'
+          InputOutput.new(solution)
         else
-          'puts.rb'
+          Puts.new(solution)
         end
 
       Thread.new do
-        status = system('ruby', script, solution)
+        status = test_case.test
 
         status.tap do |success|
           puts(solution) unless success
@@ -36,6 +39,5 @@ exit_status = Dir.chdir(__dir__) do
 
     batch.map(&:value).all?
   end
-end
 
 exit(exit_status)
