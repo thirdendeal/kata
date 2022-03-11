@@ -1,7 +1,6 @@
 # All Test
 
-require_relative 'io'
-require_relative 'puts'
+require_relative 'all/solution'
 
 solutions =
   if $stdin.tty?
@@ -21,17 +20,12 @@ solutions =
 exit_status =
   solutions.each_slice(4).all? do |batch|
     batch.map! do |solution|
-      test_case =
-        if File.directory?(solution)
-          InputOutput.new(solution)
-        else
-          Puts.new(solution)
-        end
+      test_case = Solution.new(solution)
 
       Thread.new do
-        status = test_case.test
+        result = test_case.test
 
-        status.tap do |success|
+        result.tap do |success|
           puts(solution) unless success
         end
       end
