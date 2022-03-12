@@ -23,27 +23,21 @@ module Validation
     warn(FATAL[key], *warning)
 
     @fatal = true
+
+    raise RuntimeError
   end
 
   # Assert -------------------------------------------------------------
   #
-  # May set @fatal to true
+  # May call fatal
 
   def assert_source
-    ruby_script =
-      @script.exist? &&
-      @script.extname == '.rb'
-
-    unless ruby_script
-      fatal(:script, @script)
-
-      raise RuntimeError
-    end
+    fatal(:script, @script) unless @script.extname == '.rb'
   end
 
   # Check --------------------------------------------------------------
   #
-  # May set @error to true
+  # May call error
 
   def check_execute
     error(:stdout)          if     @stdout.empty?
