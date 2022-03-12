@@ -40,25 +40,21 @@ module Validation
   # May call error
 
   def check_execute
-    error(:stdout)          if     @stdout.empty?
-
+    error(:stdout) if @stdout.empty?
     error(:stderr, @stderr) unless @stderr.empty?
-    error(:code, @code)     unless @status.success?
+
+    error(:code, @code) if @code.nonzero?
   end
 
   def check_output
-    success =
-      !@output.exist? ||
-      @output.read == @stdout
+    return unless @output.exist?
 
-    error(:output, @stdout) unless success
+    error(:output, @stdout) if @stdout != @output.read
   end
 
   def check_annotation
-    success =
-      @annotation.empty? ||
-      @annotation == @stdout
+    return if @annotation.empty?
 
-    error(:annotation, @stdout) unless success
+    error(:annotation, @stdout) if @stdout != @annotation
   end
 end
