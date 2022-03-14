@@ -23,7 +23,7 @@ cpus = Etc.nprocessors
 
 exit_status =
   solutions.each_slice(cpus).all? do |batch|
-    batch.map! do |solution|
+    thread_pool = batch.map do |solution|
       test_case = Solution.new(solution)
 
       Thread.new do
@@ -35,7 +35,7 @@ exit_status =
       end
     end
 
-    batch.map(&:value).all?
+    thread_pool.map(&:value).all?
   end
 
 exit(exit_status)
