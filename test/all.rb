@@ -1,5 +1,7 @@
 # All Test
 
+require 'etc'
+
 require_relative 'all/solution'
 
 solutions =
@@ -17,8 +19,10 @@ solutions =
     end
   end
 
+cpus = Etc.nprocessors
+
 exit_status =
-  solutions.each_slice(4).all? do |batch|
+  solutions.each_slice(cpus).all? do |batch|
     batch.map! do |solution|
       test_case = Solution.new(solution)
 
