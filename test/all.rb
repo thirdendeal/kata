@@ -4,25 +4,22 @@ require 'etc'
 
 require_relative 'all/solution'
 
+CPU    = Etc.nprocessors
+SOURCE = "#{__dir__}/../src"
+
 solutions =
   if $stdin.tty?
-    source = File.realpath(
-      "#{__dir__}/../src"
-    )
-
-    Dir["#{source}/*/*"]
+    Dir["#{SOURCE}/*/*"]
   else
-    piped = $stdin.read.lines(chomp: true)
-
-    piped.map do |path|
-      File.realpath(path)
-    end
+    $stdin.read.lines(chomp: true)
   end
 
-cpus = Etc.nprocessors
+solutions.map! do |path|
+  File.realpath(path)
+end
 
 exit_status =
-  solutions.each_slice(cpus).all? do |batch|
+  solutions.each_slice(CPU).all? do |batch|
     thread_pool = batch.map do |solution|
       test_case = Solution.new(solution)
 
