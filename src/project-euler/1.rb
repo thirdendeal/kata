@@ -2,9 +2,7 @@
 #
 # https://projecteuler.net/problem=1
 
-range = 1.upto(999)
-
-multiples = range.select do |number|
+multiples = 1.upto(999).select do |number|
   number.modulo(3).zero? || number.modulo(5).zero?
 end
 
