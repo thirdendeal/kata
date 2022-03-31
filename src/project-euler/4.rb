@@ -8,18 +8,16 @@ def palindrome?(object)
   string == string.reverse
 end
 
-lower_bound = 100
-upper_bound = 999
-
-products = []
-
-lower_bound.upto(upper_bound).each do |i|
-  (i..upper_bound).each do |j|
-    products << i * j
+def products(range)
+  range.flat_map do |i|
+    i.upto(range.max).map { |j| i * j }
   end
 end
 
-descending = products.sort.reverse
+descending =
+  products(100..999)
+  .sort
+  .reverse
 
 palindrome = descending.find do |product|
   palindrome?(product)
