@@ -2,8 +2,11 @@
 #
 # https://projecteuler.net/problem=1
 
-multiples = 1.upto(999).select do |number|
-  number.modulo(3).zero? || number.modulo(5).zero?
+numbers = 1.upto(999)
+
+multiples = numbers.select do |number|
+  number.modulo(3).zero? ||
+    number.modulo(5).zero?
 end
 
 puts(multiples.sum) # => 233168
