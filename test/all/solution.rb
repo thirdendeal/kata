@@ -9,6 +9,9 @@ class Solution
   include Validation
 
   def initialize(path)
+    @input = []
+    @output = []
+
     pathname =
       Pathname.new(path).realpath
 
@@ -28,13 +31,17 @@ class Solution
   def test
     return if @fatal
 
-    execute
+    loop do
+      execute
 
-    reset do
-      check_execute
+      reset do
+        check_execute
 
-      check_output if @output
-      check_annotation if @annotation
+        check_output unless @output.empty?
+        check_annotation if @annotation
+      end
+
+      break if @output.empty?
     end
 
     correct?
@@ -44,7 +51,7 @@ class Solution
 
   def execute
     @stdout, @stderr, @status =
-      Open3.capture3("ruby #{@script} #{@input}")
+      Open3.capture3("ruby #{@script} #{@input.pop}")
 
     @code = @status.exitstatus
   end
@@ -61,10 +68,14 @@ class Solution
     )
 
     @input =
-      pathname.join('input.txt')
+      Dir[pathname.join('input*.txt')].map do |path|
+        Pathname.new(path)
+      end
 
     @output =
-      pathname.join('output.txt')
+      Dir[pathname.join('output*.txt')].map do |path|
+        Pathname.new(path)
+      end
   end
 
   def source_file(pathname)

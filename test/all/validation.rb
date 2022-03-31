@@ -2,7 +2,7 @@ module Validation
   ERROR = {
     annotation: 'Error: Solution output is different from annotation',
     code: 'Error: Solution has a non-zero exit status',
-    output: 'Error: Solution output is different from "output.txt"',
+    output: 'Error: Solution output is different from expected',
     stderr: 'Error: Solution has a non-empty standard error',
     stdout: 'Error: Solution has no output'
   }
@@ -47,9 +47,11 @@ module Validation
   end
 
   def check_output
-    return unless @output.exist?
+    output = @output.pop
 
-    error(:output, @stdout) if @stdout != @output.read
+    return unless output.exist?
+
+    error(:output, @stdout) if @stdout != output.read
   end
 
   def check_annotation
