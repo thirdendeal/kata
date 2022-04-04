@@ -7,13 +7,13 @@ def get_nth(array, nth)
     by: nth, to: array.size
   )
 
-  indeces.each do |index|
-    yield array[index - 1]
+  indeces.map do |index|
+    array[index - 1]
   end
 end
 
 lines = ARGF.readlines
 
-get_nth(lines, 2) do |line|
+get_nth(lines, 2).each do |line|
   puts(line)
 end
