@@ -12,8 +12,10 @@ def get_nth(array, nth)
   end
 end
 
-lines = ARGF.readlines
+lines = get_nth(
+  ARGF.readlines, 2
+)
 
-get_nth(lines, 2).each do |line|
+lines.each do |line|
   puts(line)
 end
