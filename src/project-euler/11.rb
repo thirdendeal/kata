@@ -14,7 +14,9 @@ def diagonals(rows)
   end
 end
 
-grid = DATA.read.strip.lines.map do |line|
+grid = DATA.filter_map do |line|
+  next if line.chomp.empty?
+
   line.split.map(&:to_i)
 end
 
