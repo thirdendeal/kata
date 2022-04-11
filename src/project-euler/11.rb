@@ -5,37 +5,15 @@
 require 'matrix'
 
 def diagonals(matrix)
-  left   = diagonal(matrix, :strict_lower)
-  center = matrix.each(:diagonal).to_a
-  right  = diagonal(matrix, :strict_upper)
+  rows = Array(matrix)
 
-  left + [center] + right
-end
+  Array.new(rows.size * 2 - 1) do |upper_bound|
+    range = 0.upto(
+      upper_bound.clamp(0, rows.size - 1)
+    )
 
-def diagonal(matrix, which)
-  which_rows = factorial_slice(
-    matrix.each(which),
-    matrix.column_size - 1
-  )
-
-  which_rows.map do
-    which_rows.filter_map(&:shift)
+    range.filter_map { |i| rows[i].shift }
   end
-end
-
-def factorial_slice(array, elements)
-  i = 0
-
-  slice = array.slice_when do
-    i += 1
-
-    if i == elements
-      i = 0
-      elements -= 1
-    end
-  end
-
-  slice.to_a
 end
 
 def mirror(matrix)
@@ -57,10 +35,10 @@ columns  = Array(matrix.transpose)
 climbs   = diagonals(matrix)
 descends = diagonals(mirror(matrix))
 
-directions =
+runs =
   rows + columns + climbs + descends
 
-products = directions.flat_map do |run|
+products = runs.flat_map do |run|
   run.each_cons(4).map do |consecutive|
     consecutive.reduce(:*)
   end
