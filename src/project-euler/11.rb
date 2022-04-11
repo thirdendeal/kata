@@ -4,9 +4,7 @@
 
 require 'matrix'
 
-def diagonals(matrix)
-  rows = Array(matrix)
-
+def diagonals(rows)
   Array.new(rows.size * 2 - 1) do |upper_bound|
     range = 0.upto(
       upper_bound.clamp(0, rows.size - 1)
@@ -16,24 +14,14 @@ def diagonals(matrix)
   end
 end
 
-def mirror(matrix)
-  matrix = Array(matrix)
-
-  Matrix.rows(
-    matrix.map(&:reverse)
-  )
-end
-
 grid = DATA.read.strip.lines.map do |line|
   line.split.map(&:to_i)
 end
 
-matrix = Matrix.rows(grid)
-
-rows     = Array(matrix)
-columns  = Array(matrix.transpose)
-climbs   = diagonals(matrix)
-descends = diagonals(mirror(matrix))
+rows     = grid
+columns  = Array(Matrix.columns(grid))
+climbs   = diagonals(grid)
+descends = diagonals(grid.map(&:reverse))
 
 runs =
   rows + columns + climbs + descends
