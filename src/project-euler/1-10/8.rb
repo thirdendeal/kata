@@ -2,15 +2,18 @@
 #
 # https://projecteuler.net/problem=8
 
-thirteens =
+thousand_digit_number =
   DATA
   .read
   .delete("\n")
   .to_i
+
+adjacent_thirteens =
+  thousand_digit_number
   .digits
   .each_cons(13)
 
-products = thirteens.map do |thirteen|
+products = adjacent_thirteens.map do |thirteen|
   thirteen.reduce(&:*)
 end
 

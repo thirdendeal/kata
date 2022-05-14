@@ -4,9 +4,6 @@
 
 require 'prime'
 
-sieve = Prime::EratosthenesSieve.instance
-
-index = 10_001 - 1
-prime = sieve.get_nth_prime(index)
+prime = Prime::TrialDivision.instance[10_001 - 1]
 
 puts(prime) # => 104743

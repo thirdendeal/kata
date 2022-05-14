@@ -3,14 +3,15 @@
 # https://projecteuler.net/problem=4
 
 def palindrome?(object)
-  string = object.to_s
-
-  string == string.reverse
+  object.to_s == object.to_s.reverse
 end
 
 def products(range)
   range.flat_map do |i|
-    i.upto(range.max).map { |j| i * j }
+    segment =
+      i.upto(range.max)
+
+    segment.map { |j| i * j }
   end
 end
 

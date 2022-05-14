@@ -4,9 +4,8 @@
 
 require 'prime'
 
-factorization =
-  Prime.prime_division(600_851_475_143)
+pairs = 600_851_475_143.prime_division
 
-prime, _exponent = factorization.last
+prime, _exponent = pairs.last
 
 puts(prime) # => 6857

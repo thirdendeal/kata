@@ -4,7 +4,9 @@
 
 require 'prime'
 
+upper_bound = 2_000_000 - 1
+
 primes =
-  Prime.each(2_000_000 - 1)
+  Prime.each(upper_bound)
 
 puts(primes.sum) # => 142913828922

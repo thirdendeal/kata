@@ -4,7 +4,7 @@
 
 numbers = 1.upto(999)
 
-multiples = numbers.select do |number|
+multiples = numbers.filter do |number|
   number.modulo(3).zero? ||
     number.modulo(5).zero?
 end

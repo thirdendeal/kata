@@ -2,20 +2,20 @@
 #
 # https://projecteuler.net/problem=2
 
-def fibonacci(left, right)
+def fibonacci(first, second)
   Enumerator.produce do
-    left, right = right, left + right
-
-    right
+    first.tap do
+      first, second = second, first + second
+    end
   end
 end
 
-sequence = fibonacci(0, 1)
+sequence = fibonacci(1, 2)
 
-segment = sequence.take_while do |term|
+terms = sequence.take_while do |term|
   term < 4_000_000
 end
 
-terms = segment.select(&:even?)
+terms = terms.filter(&:even?)
 
 puts(terms.sum) # => 4613732

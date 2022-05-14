@@ -3,8 +3,6 @@
 # https://projecteuler.net/problem=5
 
 def divisible?(dividend, divisors)
-  divisors = Array(divisors)
-
   divisors.all? do |divisor|
     dividend.modulo(divisor).zero?
   end
