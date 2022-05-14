@@ -2,34 +2,28 @@
 #
 # https://projecteuler.net/problem=9
 
-def find_triplet(triplet_sum)
-  range(triplet_sum, 3).find do |c|
-    c_squared  = c**2
-    difference = triplet_sum - c
+triplets = Enumerator.new do |yielder|
+  3.step do |c|
+    c_squared = c**2
 
-    range(difference, 2).find do |b|
-      a = difference - b
+    (c - 1).downto(2) do |b|
+      b_squared = b**2
 
-      return [a, b, c] if c_squared == a**2 + b**2
+      (b - 1).downto(1) do |a|
+        sum = a**2 + b_squared
+
+        break if sum < c_squared
+
+        yielder << [a, b, c] if sum == c_squared
+      end
     end
   end
 end
 
-def range(total, parts)
-  upper_bound =
-    total - triangular(parts - 1)
-
-  lower_bound =
-    total / parts + (parts / 2)
-
-  (lower_bound).upto(upper_bound)
+special_triplet = triplets.find do |triplet|
+  triplet.sum == 1000
 end
 
-def triangular(number)
-  number * (number + 1) / 2
-end
-
-triplet = find_triplet(1000)
-product = triplet.reduce(&:*)
+product = special_triplet.reduce(&:*)
 
 puts(product) # => 31875000
