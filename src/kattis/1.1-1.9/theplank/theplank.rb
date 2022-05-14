@@ -9,10 +9,12 @@ length =
   .readline
   .to_i
 
-minimum =
-  Rational(length, planks.max).ceil
+minimum = length.fdiv(planks.max).ceil
+maximum = length
 
-arrangements = minimum.upto(length).flat_map do |n|
+range = minimum.upto(maximum)
+
+arrangements = range.flat_map do |n|
   permutations =
     planks.repeated_permutation(n)
 

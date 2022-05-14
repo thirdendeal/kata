@@ -4,7 +4,7 @@
 
 numbers =
   ARGF
-  .first
+  .readline
   .scan(/[[:digit:]]+/)
 
 puts(numbers[1])

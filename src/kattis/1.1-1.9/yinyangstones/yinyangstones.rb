@@ -9,13 +9,8 @@ characters =
 
 tally = characters.tally
 
-black = tally['B']
-white = tally['W']
-
-difference = white - black
-
 output =
-  if difference.zero?
+  if tally['W'] == tally['B']
     1
   else
     0

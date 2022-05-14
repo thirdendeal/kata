@@ -3,12 +3,12 @@
 # https://open.kattis.com/problems/zoom
 
 def get_nth(array, nth)
-  indeces = nth.step(
+  positions = nth.step(
     by: nth, to: array.size
   )
 
-  indeces.map do |index|
-    array[index - 1]
+  positions.map do |position|
+    array[position - 1]
   end
 end
 
@@ -19,8 +19,11 @@ nth =
   .last
   .to_i
 
-line = ARGF.readline
+sequence =
+  ARGF
+  .readline
+  .split
 
-numbers = get_nth(line.split, nth)
+numbers = get_nth(sequence, nth)
 
 puts(numbers.join(' '))

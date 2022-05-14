@@ -15,8 +15,10 @@ permutations =
   .map(&:to_i)
   .sort
 
-smallest = permutations.find do |permutation|
+larger = permutations.find do |permutation|
   permutation > number
 end
 
-puts(smallest || 0)
+output = larger || 0
+
+puts(output)
