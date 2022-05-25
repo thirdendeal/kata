@@ -2,43 +2,44 @@
 #
 # https://open.kattis.com/problems/weakvertices
 
-def graph_iterator(lines)
+def vertices_iterator(lines)
   until lines.first == "-1\n"
-    removed = lines.shift(
+    chunk = lines.shift(
       lines.shift.to_i
     )
 
-    graph = removed.map do |line|
+    vertices = chunk.map do |line|
       line.split.map(&:to_i)
     end
 
-    yield graph
+    yield vertices
   end
 end
 
-# No linked-to-vertex links to any linked-to-vertex?
-
-def weak_vertex?(vertex, graph)
+def weak_vertex?(vertex, vertices)
   indices =
     vertex.each_index.filter do |index|
       vertex[index] == 1
     end
 
+  # No linked-to-vertex links to any linked-to-vertex?
+
   indices.none? do |i|
     indices.any? do |j|
-      graph[i][j] == 1
+      vertices[i][j] == 1
     end
   end
 end
 
 lines = ARGF.readlines
 
-graph_iterator(lines) do |graph|
-  indices = graph.each_index.filter do |index|
-    vertex = graph[index]
+vertices_iterator(lines) do |vertices|
+  indices =
+    vertices.each_index.filter do |index|
+      vertex = vertices[index]
 
-    weak_vertex?(vertex, graph)
-  end
+      weak_vertex?(vertex, vertices)
+    end
 
   puts(indices.join(' '))
 end

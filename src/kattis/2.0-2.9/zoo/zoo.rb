@@ -2,30 +2,29 @@
 #
 # https://open.kattis.com/problems/zoo
 
-def get_groups(lines)
-  Enumerator.new do |yielder|
-    until lines.first == "0\n"
-      group = lines.shift(
-        lines.shift.to_i
-      )
+def list_iterator(lines)
+  until lines.first == "0\n"
+    chunk = lines.shift(
+      lines.shift.to_i
+    )
 
-      yielder << group
+    list = chunk.map do |line|
+      line.split.last.downcase
     end
+
+    yield list
   end
 end
 
-line_groups = get_groups(ARGF.readlines)
+lines = ARGF.readlines
+count = 1
 
-noun_groups = line_groups.map do |group|
-  group.map do |line|
-    line.split.last.downcase
-  end
-end
+list_iterator(lines) do |list|
+  puts("List #{count}:")
 
-noun_groups.each_with_index do |group, index|
-  puts("List #{index + 1}:")
-
-  group.tally.sort.each do |noun, count|
+  list.tally.sort.each do |noun, count|
     puts("#{noun} | #{count}")
   end
+
+  count += 1
 end
