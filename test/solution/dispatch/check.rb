@@ -24,7 +24,7 @@ class Check
   def report
     return if @failure.nil?
 
-    @verbose = true
+    @abort = true
 
     verify
   end

@@ -8,7 +8,11 @@ module Error
   }
 
   def error(key, *warnings)
-    warn(ERROR[key], *warnings) if @verbose
+    if @abort
+      warn(ERROR[key], *warnings)
+
+      exit(false)
+    end
 
     @failure = true
   end
