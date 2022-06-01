@@ -4,23 +4,24 @@
 
 planks = [1, 2, 3]
 
-length =
+max_length =
   ARGF
   .readline
   .to_i
 
-minimum = length.fdiv(planks.max).ceil
-maximum = length
+minimum = max_length.fdiv(planks.max).ceil
+maximum = max_length
 
-range = minimum.upto(maximum)
+lengths = minimum.upto(maximum)
 
-arrangements = range.flat_map do |n|
-  permutations =
-    planks.repeated_permutation(n)
+permutations = lengths.flat_map do |length|
+  planks
+    .repeated_permutation(length)
+    .to_a
+end
 
-  permutations.filter do |permutation|
-    permutation.sum == length
-  end
+arrangements = permutations.filter do |permutation|
+  permutation.sum == max_length
 end
 
 puts(arrangements.size)

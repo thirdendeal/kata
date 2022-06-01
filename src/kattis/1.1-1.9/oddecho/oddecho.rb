@@ -12,6 +12,6 @@ def get_nth(array, nth)
   end
 end
 
-lines = get_nth(ARGF.readlines, 2)
+lines = ARGF.readlines
 
-puts(lines)
+puts(get_nth(lines, 2))
