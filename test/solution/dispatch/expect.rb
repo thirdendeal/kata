@@ -7,7 +7,7 @@ module Expect
       script.parent.glob('output/*.txt')
 
     intake.zip(result).map do |input, output|
-      expect = output.read
+      expect = output&.read
 
       Check.new(script, expect, input: input)
     end
