@@ -18,13 +18,13 @@ class Filter
   end
 
   def feeling_lucky(string)
-    lucky = @pathnames.filter do |pathname|
+    return self unless string
+
+    @pathnames = @pathnames.filter do |pathname|
       filename = pathname.basename('.*')
 
       filename.to_s == string
     end
-
-    @pathnames = lucky unless lucky.empty?
 
     self
   end
