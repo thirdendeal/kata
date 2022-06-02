@@ -12,10 +12,10 @@ numbers =
 digits =
   numbers
   .sum
-  .digits
-  .first(10)
+  .to_s
+  .slice(..10)
 
-puts(digits.join) # => 2762981389
+puts(digits) # => 55373762303
 
 __END__
 
