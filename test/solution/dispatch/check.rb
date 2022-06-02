@@ -35,6 +35,8 @@ class Check
     @capture3 = Open3.capture3(
       'ruby', @script.to_s, @input.to_s
     )
+
+    puts(@capture3.first) unless @expect || @capture3.first.empty?
   end
 
   def verify
