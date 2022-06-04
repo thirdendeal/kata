@@ -18,7 +18,7 @@ longest = range.max_by do |number|
   sequence =
     collatz(number)
 
-  sequence.find_index(1) + 1
+  sequence.find_index(1)
 end
 
 puts(longest) # => 837799
