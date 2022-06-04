@@ -20,3 +20,9 @@ Style/MutableConstant:
 
 Style/SoleNestedConditional:
   Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
