@@ -17,7 +17,7 @@ products = adjacent_thirteens.map do |thirteen|
   thirteen.reduce(&:*)
 end
 
-puts(products.max) # = > 23514624000
+puts(products.max) # => 23514624000
 
 __END__
 
