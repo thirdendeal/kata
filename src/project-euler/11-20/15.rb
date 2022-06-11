@@ -3,9 +3,7 @@
 # https://projecteuler.net/problem=15
 
 def factorial(number)
-  number
-    .downto(1)
-    .reduce(:*)
+  number.downto(1).reduce(:*)
 end
 
 def choose(n, k)
