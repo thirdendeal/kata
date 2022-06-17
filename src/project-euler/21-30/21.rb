@@ -5,13 +5,6 @@
 require 'prime'
 require 'set'
 
-def d(n)
-  divisors = divisors(n)
-  proper_divisors = divisors[0..-2]
-
-  proper_divisors.sum
-end
-
 def divisors(number)
   return [1] if number.zero?
 
@@ -28,10 +21,21 @@ def divisors(number)
   divisors.to_a
 end
 
-numbers = 1.upto(10_000).filter do |number_a|
-  number_b = d(number_a)
+def proper_divisors(number)
+  divisors = divisors(number)
 
-  number_a != number_b && d(number_b) == number_a
+  divisors.pop
+  divisors
+end
+
+d = lambda do |number|
+  proper_divisors(number).sum
+end
+
+numbers = 1.upto(10_000).filter do |a|
+  b = d[a]
+
+  a != b && d[b] == a
 end
 
 puts(numbers.sum) # => 31626
