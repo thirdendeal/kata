@@ -9,7 +9,7 @@ module Expect
     intake.zip(result).map do |input, output|
       expect = output&.read
 
-      Check.new(script, expect, input: input)
+      Check.new(script, expect, input:)
     end
   end
 

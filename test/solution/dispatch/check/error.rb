@@ -31,7 +31,15 @@ module Error
 
   def prefix(*arguments)
     arguments.map do |element|
-      "# => #{element}"
+      if single_line?(element)
+        "# => #{element}"
+      else
+        element
+      end
     end
+  end
+
+  def single_line?(object)
+    !object.to_s.include?("\n")
   end
 end

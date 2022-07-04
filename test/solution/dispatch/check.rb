@@ -47,6 +47,6 @@ class Check
     error(:code, @script, code)     if     code.nonzero?
     error(:stdout, @script)         if     stdout.empty?
 
-    error(:output, stdout) if @expect && @expect != stdout
+    error(:output, @script, stdout) if @expect && @expect != stdout
   end
 end
