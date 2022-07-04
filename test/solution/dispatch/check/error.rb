@@ -1,4 +1,6 @@
 module Error
+  extend self
+
   ERROR = {
     annotation: 'Error: Solution output is different from annotation',
     code: 'Error: Solution has a non-zero exit status',
@@ -9,7 +11,7 @@ module Error
 
   def error(key, *warnings)
     if @abort
-      warn(ERROR[key], *warnings)
+      warn(*prefix(ERROR[key], *warnings))
 
       exit(false)
     end
@@ -23,5 +25,13 @@ module Error
     yield
 
     @failure
+  end
+
+  private
+
+  def prefix(*arguments)
+    arguments.map do |element|
+      "# => #{element}"
+    end
   end
 end
