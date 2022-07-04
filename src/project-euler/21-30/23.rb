@@ -12,11 +12,11 @@ end
 def divisors(number)
   return [1] if number.zero?
 
-  divisors = SortedSet.new([1])
+  divisors = Set.new([1])
 
   number.prime_division.each do |prime, exponent|
     exponent.times do
-      divisors.each do |divisor|
+      divisors.dup.each do |divisor|
         divisors.add(prime * divisor)
       end
     end
