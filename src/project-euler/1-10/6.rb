@@ -6,6 +6,6 @@ numbers = 1.upto(100)
 squares = numbers.map { |n| n**2 }
 
 difference =
-  numbers.sum**2 - squares.sum
+  (numbers.sum**2) - squares.sum
 
 puts(difference) # => 25164150

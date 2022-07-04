@@ -11,7 +11,7 @@ def alphabetical_value(string)
 
   bytes = string.upcase.bytes
 
-  bytes.sum - 64 * string.size
+  bytes.sum - (64 * string.size)
 end
 
 text =

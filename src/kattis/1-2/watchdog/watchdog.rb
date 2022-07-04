@@ -2,53 +2,73 @@
 #
 # https://open.kattis.com/problems/watchdog
 
-def numbers(string)
-  string
-    .scan(/[[:digit:]]+/)
-    .map(&:to_i)
-end
+module Input
+  extend self
 
-def roofs(lines)
-  test_cases = lines.shift.to_i
+  def roofs(lines)
+    test_cases = lines.shift.to_i
 
-  test_cases.times do
-    side, hatches = numbers(lines.shift)
+    test_cases.times do
+      side, hatches = numbers(lines.shift)
 
-    hatches = hatches.times.map do
-      numbers(lines.shift)
-    end
-
-    yield [side, hatches]
-  end
-end
-
-def search(roof)
-  side, hatches = roof
-
-  1.upto(side / 2) do |x|
-    leash = x
-
-    x.upto(side - x) do |y|
-      reach = hatches.all? do |hatch_x, hatch_y|
-        next if hatch_x == x && hatch_y == y
-
-        delta_x = hatch_x - x
-        delta_y = hatch_y - y
-
-        distance = Math.sqrt(delta_x**2 + delta_y**2)
-
-        leash >= distance
+      hatches = hatches.times.map do
+        numbers(lines.shift)
       end
 
-      return "#{x} #{y}" if reach
+      yield [side, hatches]
     end
   end
 
-  'poodle'
+  private
+
+  def numbers(string)
+    string
+      .scan(/[[:digit:]]+/)
+      .map(&:to_i)
+  end
+end
+
+module Solution
+  extend self
+
+  def search(roof)
+    side, hatches = roof
+
+    1.upto(side / 2) do |a|
+      a.upto(side - a) do |b|
+        found = in_reach?([a, b], a, hatches)
+
+        return "#{a} #{b}" if found
+      end
+    end
+
+    'poodle'
+  end
+
+  private
+
+  def distance(point_a, point_b)
+    x1, y1 = point_a
+    x2, y2 = point_b
+
+    Math.sqrt(
+      ((x2 - x1)**2) + ((y2 - y1)**2)
+    )
+  end
+
+  def in_reach?(point, distance, points)
+    a, b = point
+
+    points.all? do |x, y|
+      next if x == a && y == b
+
+      distance >= distance([a, b], [x, y])
+    end
+  end
 end
 
 lines = ARGF.readlines
 
-roofs(lines) do |roof|
-  puts(search(roof))
+Input.roofs(lines) do |roof|
+  puts(Solution.search(roof))
 end

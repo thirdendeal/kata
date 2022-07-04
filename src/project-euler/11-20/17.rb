@@ -32,7 +32,7 @@ module Cardinal
   end
 
   def tens(tens, ones)
-    if ones == 0
+    if ones.zero?
       TENS[tens]
     elsif tens == 1
       TEENS[ones]

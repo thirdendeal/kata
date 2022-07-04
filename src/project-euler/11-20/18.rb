@@ -10,14 +10,14 @@ def read_grid
   end
 end
 
-def traverse(triangle, y = 0, x = 0, path = [], &block)
-  path << triangle[y][x]
+def traverse(triangle, depth = 0, breadth = 0, path = [], &)
+  path << triangle[depth][breadth]
 
   if path.size == triangle.size
     yield path
   else
-    traverse(triangle, y + 1, x, path.clone, &block)
-    traverse(triangle, y + 1, x + 1, path.clone, &block)
+    traverse(triangle, depth + 1, breadth, path.clone, &)
+    traverse(triangle, depth + 1, breadth + 1, path.clone, &)
   end
 end
 

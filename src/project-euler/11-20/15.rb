@@ -6,9 +6,9 @@ def factorial(number)
   number.downto(1).reduce(:*)
 end
 
-def choose(n, k)
-  numerator   = factorial(n)
-  denominator = factorial(k) * factorial(n - k)
+def choose(elements, combinations)
+  numerator   = factorial(elements)
+  denominator = factorial(combinations) * factorial(elements - combinations)
 
   numerator / denominator
 end

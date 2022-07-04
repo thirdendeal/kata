@@ -5,7 +5,7 @@
 require 'matrix'
 
 def diagonals(rows)
-  Array.new(rows.size * 2 - 1) do |upper_bound|
+  Array.new((2 * rows.size) - 1) do |upper_bound|
     range = 0.upto(
       upper_bound.clamp(0, rows.size - 1)
     )

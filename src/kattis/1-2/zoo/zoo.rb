@@ -22,8 +22,8 @@ count = 1
 list_iterator(lines) do |list|
   puts("List #{count}:")
 
-  list.tally.sort.each do |noun, count|
-    puts("#{noun} | #{count}")
+  list.tally.sort.each do |noun, tally|
+    puts("#{noun} | #{tally}")
   end
 
   count += 1

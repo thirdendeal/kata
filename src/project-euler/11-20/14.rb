@@ -7,7 +7,7 @@ def collatz(number)
     if previous.even?
       previous / 2
     else
-      previous * 3 + 1
+      (3 * previous) + 1
     end
   end
 end

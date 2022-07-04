@@ -10,7 +10,7 @@ triplets = Enumerator.new do |yielder|
       b_squared = b**2
 
       (b - 1).downto(1) do |a|
-        sum = a**2 + b_squared
+        sum = (a**2) + b_squared
 
         break if sum < c_squared
 
