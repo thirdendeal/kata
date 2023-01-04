@@ -11,9 +11,11 @@ staged =
 filter =
   Filter
   .new(staged)
-  .under("#{__dir__}/../src")
+  .under("#{__dir__}/../source")
   .extname('.rb')
   .feeling_lucky(ARGV[0])
+
+abort("Error: No match found for \"#{ARGV[0]}\"") if ARGV[0] && filter.pathnames.empty?
 
 dispatch =
   Dispatch

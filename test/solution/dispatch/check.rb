@@ -43,9 +43,9 @@ class Check
     stdout, stderr, status = @capture3
     code = status.exitstatus
 
-    error(:stderr, @script, stderr) unless stderr.empty?
-    error(:code, @script, code)     if     code.nonzero?
-    error(:stdout, @script)         if     stdout.empty?
+    error(:stderr, @script, stdout, stderr) unless stderr.empty?
+    error(:code, @script, stdout, code)     if     code.nonzero?
+    error(:stdout, @script, stdout)         if     stdout.empty?
 
     error(:output, @script, stdout) if @expect && @expect != stdout
   end
