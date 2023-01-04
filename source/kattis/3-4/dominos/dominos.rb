@@ -13,7 +13,7 @@ module Input
         dominos, mapping_number =
           numbers(lines.shift)
 
-        mappings = mapping_number.times.map do
+        mappings = Array.new(mapping_number) do
           numbers(lines.shift)
         end
 

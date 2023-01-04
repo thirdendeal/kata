@@ -11,7 +11,7 @@ module Input
     test_cases.times do
       side, hatches = numbers(lines.shift)
 
-      hatches = hatches.times.map do
+      hatches = Array.new(hatches) do
         numbers(lines.shift)
       end
 

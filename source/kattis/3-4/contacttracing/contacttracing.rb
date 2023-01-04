@@ -18,7 +18,7 @@ people, days =
 infected, *infected_one_indices =
   numbers(lines.shift)
 
-times = people.times.map do
+times = Array.new(people) do
   numbers(lines.shift)
 end
 

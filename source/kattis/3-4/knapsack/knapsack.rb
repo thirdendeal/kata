@@ -11,7 +11,7 @@ module Input
         capacity, object_number =
           numbers(lines.shift)
 
-        objects = object_number.times.map do
+        objects = Array.new(object_number) do
           numbers(lines.shift)
         end
 
