@@ -1,0 +1,3 @@
+# Kata
+
+Systematic Ruby practice
