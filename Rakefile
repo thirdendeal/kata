@@ -1,20 +1,19 @@
 # Kata - Rakefile
 # ----------------------------------------------------------------------
 
-# Usage: rake euler[pattern]
+# Usage: rake profile[root-pattern,filename-pattern]
 #
-# e.g.:  rake euler[1]
-# e.g.:  rake euler["{1\,2}"]
+# rake profile[project-euler,1]
+# rake profile["project-euler,{1\,2}"]
 
-task :euler do |_, arguments|
-  argv = arguments.to_a
+task :profile do |_, arguments|
+  root, filename = arguments.to_a
 
-  queue = search(
-    'source/project-euler',
-    argv[0]
+  queue = Dir.glob(
+    "source/#{root}/**/#{filename}.rb"
   )
 
   queue.each do |script|
-    euler(script)
+    profile(script)
   end
 end
