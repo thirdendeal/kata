@@ -2,6 +2,7 @@
 # ----------------------------------------------------------------------
 
 MAP = {
+  'source/kattis' => 'kattis',
   'source/project-euler' => 'project_euler'
 }
 
@@ -32,5 +33,19 @@ def project_euler(script)
     stdout: annotation
   }
 
-  [command, expect]
+  [[command, expect]]
+end
+
+def kattis(script)
+  sample = "#{File.dirname(script)}/sample"
+
+  origin = Dir.glob("#{sample}/input*")
+  target = Dir.glob("#{sample}/output*")
+
+  origin.zip(target).map do |input, output|
+    [
+      "ruby \"#{script}\" \"#{input}\"",
+      { stdout: File.read(output) }
+    ]
+  end
 end

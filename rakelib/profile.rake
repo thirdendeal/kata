@@ -19,10 +19,18 @@ end
 # ----------------------------------------------------------------------
 
 def profile(script)
-  command, expect = setup(script)
+  pairs = setup(script)
 
-  puts("=> #{command}")
-  capture = pretty_capture(command)
+  last_index = pairs.size - 1
 
-  report(capture, expect)
+  pairs.each_with_index do |pair, index|
+    command, expect = pair
+
+    puts("=> #{command}")
+    capture = pretty_capture(command)
+
+    report(capture, expect)
+
+    puts unless index == last_index
+  end
 end
