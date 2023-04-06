@@ -1,25 +1,6 @@
 # Kata - Rakefile
 # ----------------------------------------------------------------------
 
-# Usage: rake profile[root-pattern,filename-pattern]
-#
-# rake profile[project-euler,1]
-# rake profile["project-euler,{1\,2}"]
-
-task :profile do |_, arguments|
-  root, filename = arguments.to_a
-
-  queue = Dir.glob(
-    "source/#{root}/**/#{filename}.rb"
-  )
-
-  queue.each do |script|
-    profile(script)
-  end
-end
-
-# ----------------------------------------------------------------------
-
 task 'project-euler': :euler
 
 # ----------------------------------------------------------------------
@@ -30,7 +11,7 @@ task 'project-euler': :euler
 # rake euler["{1\,2}"]
 
 task :euler do |_, arguments|
-  pattern,  = *arguments
+  pattern, = *arguments
 
   queue = search('project-euler', pattern)
 
@@ -38,6 +19,8 @@ task :euler do |_, arguments|
     profile(script)
   end
 end
+
+# ----------------------------------------------------------------------
 
 # Usage: rake kattis[filename-pattern]
 #
