@@ -1,4 +1,4 @@
-# Setup
+# Scheme
 # ----------------------------------------------------------------------
 
 MAP = {
@@ -8,7 +8,7 @@ MAP = {
 
 # ----------------------------------------------------------------------
 
-def setup(script)
+def scheme(script)
   dirname = File.dirname(script)
 
   _, function_name = MAP.find do |path, _|
@@ -19,22 +19,6 @@ def setup(script)
 end
 
 # ----------------------------------------------------------------------
-
-def project_euler(script)
-  command = "ruby \"#{script}\""
-
-  annotation =
-    File
-    .read(script)
-    .match(/# => ([[:digit:]]+\n)/)
-    &.match(1)
-
-  expect = {
-    stdout: annotation
-  }
-
-  [[command, expect]]
-end
 
 def kattis(script)
   sample = "#{File.dirname(script)}/sample"
@@ -48,4 +32,20 @@ def kattis(script)
       { stdout: File.read(output) }
     ]
   end
+end
+
+def project_euler(script)
+  command = "ruby \"#{script}\""
+
+  annotation =
+    File
+    .read(script)
+    .match(/# => ([[:digit:]]+\n)/)
+    &.match(1)
+
+  expect = {
+    'Standard Output' => annotation
+  }
+
+  [[command, expect]]
 end

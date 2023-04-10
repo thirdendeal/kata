@@ -13,10 +13,13 @@ task 'project-euler': :euler
 task :euler do |_, arguments|
   pattern, = *arguments
 
-  queue = search('project-euler', pattern)
+  queue = search(
+    'project-euler',
+    pattern
+  )
 
   queue.each do |script|
-    profile(script)
+    report(script)
   end
 end
 
@@ -30,9 +33,12 @@ end
 task :kattis do |_, arguments|
   pattern, = *arguments
 
-  queue = search('kattis', pattern)
+  queue = search(
+    'kattis',
+    pattern
+  )
 
   queue.each do |script|
-    profile(script)
+    report(script)
   end
 end

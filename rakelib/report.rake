@@ -1,30 +1,48 @@
 # Report
 # ----------------------------------------------------------------------
 
-REPORT = {
-  time:   'Real Time',
+KEYS = [
+  'Standard Output',
+  'Standard Error',
+  'Exit Status Code'
+]
 
-  stdout: 'Standard Output',
-  stderr: 'Standard Error',
-  status: 'Exit Status Code'
-}
 # ----------------------------------------------------------------------
 
-def report(capture, expect)
-  REPORT.each do |key, message|
-    if expect[key] && expect[key] != capture[key]
-      puts("-> Expected #{message}")
+def report(script)
+  scheme = scheme(script)
+
+  scheme.each do |command, expect|
+    puts("=> #{command}")
+    profile = profile(command)
+
+    printf(
+      "-> Real Time\n%.3f\n",
+      profile['Real Time']
+    )
+
+    outline(expect, profile)
+  end
+end
+
+# ----------------------------------------------------------------------
+
+def outline(expect, profile)
+  KEYS.each do |key|
+    if expect[key] && expect[key] != profile[key]
+      puts("-> Expected #{key}")
+
       puts(expect[key])
     end
 
-    next unless capture[key]
+    next unless profile[key]
 
-    if expect[key] == capture[key]
-      puts("-> #{message} (Expected)")
+    if expect[key] == profile[key]
+      puts("-> #{key} (Expected)")
     else
-      puts("-> #{message}")
+      puts("-> #{key}")
     end
 
-    puts(capture[key])
+    puts(profile[key])
   end
 end

@@ -1,36 +1,31 @@
 # Profile
 # ----------------------------------------------------------------------
 
-def pretty_capture(command)
-  capture = capture(command)
+require 'benchmark'
+require 'open3'
 
-  capture.delete(:stdout) if capture[:stdout].empty?
-  capture.delete(:stderr) if capture[:stderr].empty?
-  capture.delete(:status) if capture[:status].success?
+# ----------------------------------------------------------------------
 
-  capture[:time] = format(
-    '%.3f',
-    capture[:measure].real
-  )
+def profile(command)
+  capture3, measure = capture(command)
 
-  capture
+  {
+    'Standard Output' => (capture3[0] unless capture3[0].empty?),
+    'Standard Error' => (capture3[1] unless capture3[1].empty?),
+    'Exit Status Code' => (capture3[2] unless capture3[2].success?),
+
+    'Real Time' => measure.real
+  }
 end
 
 # ----------------------------------------------------------------------
 
-def profile(script)
-  pairs = setup(script)
+def capture(command)
+  capture3 = nil
 
-  last_index = pairs.size - 1
-
-  pairs.each_with_index do |pair, index|
-    command, expect = pair
-
-    puts("=> #{command}")
-    capture = pretty_capture(command)
-
-    report(capture, expect)
-
-    puts unless index == last_index
+  measure = Benchmark.measure do
+    capture3 = Open3.capture3(command)
   end
+
+  [capture3, measure]
 end
