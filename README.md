@@ -5,11 +5,13 @@ Systematic Ruby practice
 ## Usage
 
 ```shell
-# Usage: rake euler[filename-pattern]
+# Usage: rake euler[pattern,verbose]
 
 rake euler[1]
+rake euler[1,]
 
-# Usage: rake kattis[filename-pattern]
+# Usage: rake kattis[pattern,verbose]
 
 rake kattis[different]
+rake kattis[different,]
 ```

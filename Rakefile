@@ -5,13 +5,16 @@ task 'project-euler': :euler
 
 # ----------------------------------------------------------------------
 
-# Usage: rake euler[filename-pattern]
+# Usage: rake euler[pattern,verbose]
 #
 # rake euler[1]
+# rake euler[1,]
+#
 # rake euler["{1\,2}"]
+# rake euler["{1\,2},"]
 
 task :euler do |_, arguments|
-  pattern, = *arguments
+  pattern, verbose = *arguments
 
   queue = search(
     'project-euler',
@@ -19,19 +22,22 @@ task :euler do |_, arguments|
   )
 
   queue.each do |script|
-    report(script)
+    report(script, verbose)
   end
 end
 
 # ----------------------------------------------------------------------
 
-# Usage: rake kattis[filename-pattern]
+# Usage: rake kattis[pattern,verbose]
 #
 # rake kattis[different]
+# rake kattis[different,]
+#
 # rake kattis[diff]
+# rake kattis[diff,]
 
 task :kattis do |_, arguments|
-  pattern, = *arguments
+  pattern, verbose = *arguments
 
   queue = search(
     'kattis',
@@ -39,6 +45,6 @@ task :kattis do |_, arguments|
   )
 
   queue.each do |script|
-    report(script)
+    report(script, verbose)
   end
 end
