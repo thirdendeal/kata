@@ -29,7 +29,9 @@ def kattis(script)
   origin.zip(target).map do |input, output|
     [
       "ruby \"#{script}\" \"#{input}\"",
-      { stdout: File.read(output) }
+      {
+        'Standard Output' => File.read(output)
+      }
     ]
   end
 end
