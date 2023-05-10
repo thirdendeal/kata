@@ -9,6 +9,9 @@ Layout/HashAlignment:
   EnforcedColonStyle:
     - key
     - table
+  EnforcedHashRocketStyle:
+    - key
+    - table
 
 Security/Eval:
   Enabled: false
