@@ -10,16 +10,16 @@ KEYS = [
 # ----------------------------------------------------------------------
 
 def report(script, verbose = false)
-  scheme = scheme(script)
+  schemes = scheme(script)
 
-  scheme.each do |command, expect|
-    print("=> #{command}")
-    profile = profile(command)
+  schemes.flatten.each do |scheme|
+    print("=> #{scheme[:command]}")
+    profile = profile(scheme[:command])
 
     if verbose
       print("\n")
 
-      verbose_output(expect, profile)
+      verbose_output(scheme[:expect], profile)
     else
       output(profile)
     end
